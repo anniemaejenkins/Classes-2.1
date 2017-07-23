@@ -17,14 +17,24 @@
 // Create the Factory class bellow:
 
 class Factory {
-  constructor () {
+  constructor (config = {}) {
     this.make = 'Mazda';
     this.location = 'USA';
     this.airbags = true;
     this.abs = true;
-    this.warranty = '60,000 / 3 years';
+    this.warranty = config.warranty || '60,000 / 3 years';
   }
 
+  static massBuild(quantity, options){
+    this.quantity = quantity;
+    console.log('Building ${quantity} ${config.color} ${config.trim} ${config.model}');
+    return;
+  }
+  static customerBuild(color, options){
+    this.color = color;
+    console.log('Building one ${color} ${this.trim} ${this.model} with the following config: ${config.join(', ')}');
+    return;
+  }
 }
 
 
@@ -36,7 +46,24 @@ class Factory {
 // Car should also have the following additional properties: enginesize (4), navigation (true), backupcamera (true), warranty (100,000 miles / 5 years)
 // Write your code below:
 
-
+class Car extends Factory {
+  constructor(config = {}) {
+    super({warranty: '100,000 / 5 years'});
+    this.enginesize = 4;
+    this.navigation = true;
+    this.backupcamera = true;
+    this.model = config.model;
+    this.doors = config.doors;
+    this.color = config.color;
+    this.enginetype = config.enginetype;
+    this.transmission = config.transmission;
+    this.trim = config.trim;
+    this.wheelstrim = config.wheelstrim;
+    this.audio = config.audio;
+    this.seatstrim = config.seatstrim;
+    this.moonroof = config.moonroof;
+  }
+}
 
 
 // CREATE A SUB-CLASS CALLED SPORT
@@ -45,6 +72,22 @@ class Factory {
 // Sports cars should also have the following additional properties: moonroof (false), enginetype (gasoline), convertible (true), doors (2)
 // Write your code below:
 
+class Sport extends Car {
+  constructor(config = {}){
+    this.model = config.model;
+    this.trim = config.trim;
+    this.transmission = config.transmission;
+    this.top = config.top;
+    this.color = config.color;
+    this.seatstrim = config.seatstrim;
+    this.audio = config.audio;
+    this.wheelstrim = config.wheelstrim;
+    this.moonroof = false;
+    this.enginetype = config.gasoline;
+    this.convertible = true;
+    this.doors = 2;
+  }
+}
 
 
 
@@ -56,7 +99,19 @@ class Factory {
 // It should also inherit the warranty property so we can extend it to: 150,000 miles / 6 years.
 // Write your code below:
 
-
+class Truck extends Factory {
+  constructor(config = {}){
+    super({warranty: '150,000 miles / 6 years'})
+    this.model = config.model;
+    this.color = config.color;
+    this.enginesize = config.enginesize;
+    this.hitch = config.hitch;
+    this.bed = config.bed;
+    this.navigation = config.navigation;
+    this.backupcamera = true;
+    this.audio = 'basic';
+  }
+}
 
 
 // LET'S BUILD SOME CARS AND TRUCKS!
@@ -67,10 +122,11 @@ class Factory {
 
 // Write your 'mazda3' instance below:
 
+let mazda3 = new Car({model:'mazda3', color: 'red', enginetype: 'hybrid', transmission: 'automatic', trim: 'touring', wheels: 'base', audio: 'premium', seats: 'leather', moonroof: true});
 
 // Print mazda3. I should have all the above properties.
 // Write your code below:
-
+console.log(mazda3);
 
 
 
@@ -78,7 +134,7 @@ class Factory {
 // Print calling massBuild(), building 35000 cars.
 // It should print: "Building 35000 Red Touring Mazda3's."
 // Write your code below:
-
+Factory.massBuild(35000, mazda3);
 
 
 
