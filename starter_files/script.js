@@ -17,6 +17,7 @@
 // Create the Factory class bellow:
 
 class Factory {
+
   constructor (config = {}) {
     this.make = 'Mazda';
     this.location = 'USA';
@@ -26,13 +27,13 @@ class Factory {
   }
 
   static massBuild(quantity, options){
-    this.quantity = quantity;
-    console.log('Building ${quantity} ${config.color} ${config.trim} ${config.model}');
+    console.log(`Building ${quantity} ${options.color} ${options.trim} ${options.model}'s`);
     return;
   }
+
   static customerBuild(color, options){
     this.color = color;
-    console.log('Building one ${color} ${this.trim} ${this.model} with the following config: ${config.join(', ')}');
+    console.log(`Building one ${color} ${this.trim} ${this.model} with the following options: ${options.join(', ')}`);
     return;
   }
 }
@@ -62,6 +63,14 @@ class Car extends Factory {
     this.audio = config.audio;
     this.seatstrim = config.seatstrim;
     this.moonroof = config.moonroof;
+  //   let that = this;
+  //
+  //   for (var key in config) {
+  //     if (config.hasOwnProperty(key)) {
+  //       that[key] = config[key];
+  //     }
+  //   }
+
   }
 }
 
@@ -74,6 +83,7 @@ class Car extends Factory {
 
 class Sport extends Car {
   constructor(config = {}){
+    super(config = {});
     this.model = config.model;
     this.trim = config.trim;
     this.transmission = config.transmission;
@@ -126,10 +136,7 @@ let mazda3 = new Car({model:'mazda3', color: 'red', enginetype: 'hybrid', transm
 
 // Print mazda3. I should have all the above properties.
 // Write your code below:
-console.log(mazda3);
-
-
-
+console.log('mazda', mazda3);
 
 // Print calling massBuild(), building 35000 cars.
 // It should print: "Building 35000 Red Touring Mazda3's."
@@ -137,13 +144,10 @@ console.log(mazda3);
 Factory.massBuild(35000, mazda3);
 
 
-
-
 // Print, calling customerBuild(), building one yellow mazda3 with the following options, as an array: weather package, satellite radio, rear spoiler.
 // It should read: "Building one yellow Touring Mazda3 with the following options: weather package, satellite radio, rear spoiler"
 // Write your code below:
-
-
+Factory.customerBuild.call(mazda3, 'yellow', ['weather package', 'satellite radio', 'rear spoiler']);
 
 
 
@@ -153,14 +157,14 @@ Factory.massBuild(35000, mazda3);
 
 // Write your 'miataRf' instance below:
 // Write your code below:
-
+let miataRf = new Sport({model: 'Miata-RF', trim: 'Grand Touring', transmission: 'manual', top: 'hard top', color: 'red', seats: 'leather', audio: 'premium', wheels: 'premium'});
 
 
 
 
 // Print miataRf. It should have all of the above properties. Plus, the extended warranty.
 // Write your code below:
-
+console.log(miataRf);
 
 
 
@@ -168,7 +172,7 @@ Factory.massBuild(35000, mazda3);
 // Print miataRf, calling massBuild(), building 15,000
 // It should print: "Building 15000 Red Grand Touring Miata-RF's."
 // Write your code below:
-
+Factory.massBuild(15000, miataRf);
 
 
 
